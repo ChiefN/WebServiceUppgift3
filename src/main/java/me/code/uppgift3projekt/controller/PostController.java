@@ -1,27 +1,21 @@
 package me.code.uppgift3projekt.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.code.uppgift3projekt.data.Post;
 import me.code.uppgift3projekt.data.User;
-import me.code.uppgift3projekt.dto.AdminPostDto;
-import me.code.uppgift3projekt.dto.PostCreationDto;
-import me.code.uppgift3projekt.dto.PostDto;
-import me.code.uppgift3projekt.dto.PostExcerptDto;
+import me.code.uppgift3projekt.dto.*;
 import me.code.uppgift3projekt.exception.NotOwnerException;
 import me.code.uppgift3projekt.exception.PostAlreadyExistsException;
 import me.code.uppgift3projekt.exception.PostDoesNotExistException;
 import me.code.uppgift3projekt.service.PostService;
-import me.code.uppgift3projekt.service.TokenService;
 import me.code.uppgift3projekt.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -57,7 +51,7 @@ public class PostController {
     @GetMapping("/post")
     public ResponseEntity<?> singlePost(@RequestParam String postId){
         try{
-            return new ResponseEntity<>(PostDto.postToDto(postService.getPost(postId)), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(PostDto.postToDto(postService.getPost(postId)), HttpStatus.OK);
         }catch (PostDoesNotExistException e){
             return new ResponseEntity<>("No post with title: " + postId + " was found.", HttpStatus.NOT_FOUND);
         }
@@ -83,7 +77,9 @@ public class PostController {
     }
 
     @PutMapping("/admin/update")
-    public ResponseEntity<?> updatePost(@RequestParam String postId, @RequestBody String content){
+    public ResponseEntity<?> updatePost(@RequestParam String postId, @RequestBody String json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String content = objectMapper.readValue(json, Content.class).content();
         User authenticatedUser;
         try{
             authenticatedUser = (User) userService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());

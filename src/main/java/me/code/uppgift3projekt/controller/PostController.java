@@ -97,6 +97,7 @@ public class PostController {
         }catch (PostDoesNotExistException e){
             return new ResponseEntity<>("Post does not exist", HttpStatus.NOT_FOUND);
         } catch (NotOwnerException e){
+            //TODO: Skicka med någon data om felet till Frontenden
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); //https://auth0.com/blog/forbidden-unauthorized-http-status-codes/
         }
         return new ResponseEntity<>(PostDto.postToDto(updatedPost), HttpStatus.OK);

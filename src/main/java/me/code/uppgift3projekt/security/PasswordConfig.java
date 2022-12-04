@@ -1,4 +1,4 @@
-package me.code.uppgift3projekt.repository.security;
+package me.code.uppgift3projekt.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

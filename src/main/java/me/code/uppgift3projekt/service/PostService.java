@@ -2,18 +2,14 @@ package me.code.uppgift3projekt.service;
 
 import me.code.uppgift3projekt.data.Post;
 import me.code.uppgift3projekt.data.User;
-import me.code.uppgift3projekt.dto.PostDto;
-import me.code.uppgift3projekt.dto.PostExcerptDto;
 import me.code.uppgift3projekt.exception.NotOwnerException;
 import me.code.uppgift3projekt.exception.PostAlreadyExistsException;
 import me.code.uppgift3projekt.exception.PostDoesNotExistException;
 import me.code.uppgift3projekt.repository.PostRepository;
-import me.code.uppgift3projekt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class PostService {

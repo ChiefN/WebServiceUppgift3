@@ -1,4 +1,4 @@
-package me.code.uppgift3projekt.repository.security;
+package me.code.uppgift3projekt.security;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -41,6 +41,8 @@ public class SecurityConfig {
                 .and().oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)//This together with our decoder-bean will handle the reading of JWT
                 //.httpBasic(Customizer.withDefaults()) //HTTPBasic is a basic filter. Replaces JWTVerifyFilter. Will set SecurityContextHolder and send the correct responses.
                 .build();
+
+
     }
     @Bean
     public WebMvcConfigurer corsConfigurer() {
